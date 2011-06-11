@@ -1,0 +1,21 @@
+<form action="" method="post" accept-charset="utf-8" id="add-task">
+	<h3>{% if task %}Edit Task{% else %}Add New Task{% endif %}</h3>
+	<p>
+		<label for="path">To:
+			<select name="path" id="path"> 
+				<option value="/inbox/tasks">Inbox</option>
+				<option disabled>Other:</option>
+			</select> 
+		</label>
+	</p> 
+	<p><input type="text" name="title" value="{% if task %}{{ task.title }}{% endif %}" id="title" placeholder="Title" required autofocus></p> 
+	<p><input type="url" name="url" value="{% if task %}{{ task.url }}{% endif %}" id="url" placeholder="URL"></p> 
+	<p><textarea name="notes" id="notes" placeholder="Notes" cols="20" rows="2" onkeyup="grow(this)" onchange="grow(this)">{% if task %}{{ task.notes }}{% endif %}</textarea></p> 
+	<script type="text/javascript" charset="utf-8">grow(document.getElementById('notes'))</script>
+	<p><input type="text" name="start_date" value="{% if task %}{{ task.start_date }}{% endif %}" id="start_date" placeholder="Start Date" autocapitalize="off"></p> 
+	<p><input type="text" name="due_date" value="{% if task %}{{ task.due_date }}{% endif %}" id="due_date" placeholder="Due Date" autocapitalize="off"></p> 
+	<p>
+		<input type="submit" value="{% if task %}Save{% else %}Add Task{% endif %}">
+		{% if task %} or <a href="{{ url_for('tasks') }}">Cancel</a>{% endif %}
+	</p>
+</form>

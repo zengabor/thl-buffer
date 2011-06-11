@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+ 
+<html> 
+	<head>
+	    <title>THL Buffer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.5, user-scalable=yes"/>
+		<link href="/static/stylesheet.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" charset="utf-8" src="/static/scripts.js"></script>
+
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-23910480-1']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+	</head>
+    <body>
+	
+<div id="header"> 
+
+<div id="userinfo">
+	{% if user %}
+		{{ user.email() }} |
+	{% endif %} 
+	{% if loginurl %}
+		<a href="{{ loginurl }}">Sign In</a>
+	{% elif logouturl %}
+		<a href="{{ logouturl }}">Sign Out</a>
+	{% endif %}
+</div>
+
+<h1>THL Buffer</h1>
+
+<ul id="navigation">
+	{% if handler == "WelcomeHandler" %}
+		<li><span><a href="/">Welcome</a></span></li>
+	{% else %}
+		<li><a href="/">Welcome</a></li>
+	{% endif %}
+	{% if not user %}
+		<li><span class="disabled">Tasks</span></li>
+		<li><span class="disabled">Archive</span></li>
+	{% else %}
+		{% if handler in ("TaskListHandler", "TaskHandler") %}
+			<li><span><a href="/tasks">Tasks</a></span></li>
+		{% else %}
+			<li><a href="/tasks">Tasks</a></li>
+		{% endif %}		
+		{% if handler == "ArchiveHandler" %}
+			<li><span><a href="/archive">Archive</a></span></li>
+		{% else %}
+			<li><a href="/archive">Archive</a></li>
+		{% endif %}		
+	{% endif %}
+</ul>
+</div>
+		
+<div id="content"> 
+	{% block content %}
+	{% endblock %}
+ </div>
+
+ <div id="footer">
+	<p>
+		Created by <a href="http://lenardgabor.com/">Gabor Lenard</a>
+		&ndash; 
+		<a href="http://www.famfamfam.com/lab/icons/silk/">Silk icons by FamFamFam</a>
+	</p>
+ </div>
+ 
+    </body> 
+</html>

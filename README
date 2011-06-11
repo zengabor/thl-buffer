@@ -1,0 +1,31 @@
+THL Buffer -- https://thl-buffer.appspot.com/
+=============================================
+
+How to use the source code
+--------------------------
+
+This is a Tipfy 1.0 application. Download Tipfy 1.0 from http://tipfy.org and put this source code into its app/ folder. Make sure you follow the installation insturctions: http://www.tipfy.org/wiki/guide/installation/
+
+
+Licence
+-------
+
+See LICENSE file for details.
+
+
+What is THL Buffer?
+-------------------
+
+It's a simple web app that helps me collect my tasks and then later import them into The Hit List (http://www.potionfactory.com/thehitlist/) running on Mac (and soon on iPhone, iPod touch or iPad). It acts as a temporary buffer until I can access THL.
+
+The only physical keyboard in the office is connected to a Windows box so I use this web app to quickly add new tasks, often using copy & paste. Later I import them into THL on my Mac at home (or remotely, using Screens, http://www.edovia.com/screens). Once the iPhone version is released I can import the individual tasks by clicking the links (using the custom URL scheme, http://stereointeractive.com/blog/2011/06/01/the-hit-list-for-mac-safari-extension/). Currently I am using this web app to enter tasks on my iPhone.
+
+Since I enter the information here in a structured format everything is preserved when I import them into THL: Title, URL, Notes, Start Date, End Date.
+
+(Be aware, that if you type relative values into the Start Date and Due Date fields that these are evaluated at the time of import into THL. Also, note that the fields Priority and Estimated Time are absent as I never use them.)
+
+
+Contact
+-------
+
+Gabor Lenard, thl@lenardgabor.com

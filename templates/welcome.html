@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>What's this?</h2>
+
+<p>It's a simple web app that helps me collect my tasks and then later import them into <a href="http://www.potionfactory.com/thehitlist/">The Hit List</a> running on Mac (and soon on iPhone, iPod touch or iPad). It acts as a temporary buffer until I can access THL.</p>
+
+<p>The only physical keyboard in the office is connected to a Windows box so I use this web app to quickly add new tasks, often using copy & paste. Later I import them into THL on my Mac at home (or remotely, using <a href="http://www.edovia.com/screens">Screens</a>). Once the iPhone version is released I can import the individual tasks by clicking the links (using the <a href="http://stereointeractive.com/blog/2011/06/01/the-hit-list-for-mac-safari-extension/">custom URL scheme</a>). Currently I am using this web app to enter tasks on my iPhone.</p>
+
+<p>Since I enter the information here in a structured format everything is preserved when I import them into THL: Title, URL, Notes, Start Date, End Date.</p>
+
+<p>(Be aware, that if you type relative values into the <em>Start Date</em> and <em>Due Date</em> fields that these are evaluated at the time of import into THL. Also, note that the fields <em>Priority</em> and <em>Estimated Time</em> are absent as I never use them.)</p>
+
+<h2>Disclaimer</h2>
+
+<p>This web app is provided "as is", without warranty of any kind. Your data is yours: anything you enter here will be displayed only to you and will not be used for anything else.</p>
+
+<p>It is a free app running of Google's servers, and I don't know how long it will be here. Use it only as a quick temporary space and don't store any sensitive or critical information here.</p>
+
+{% if loginurl %}
+<h2><a href="{{ loginurl }}">Sign In</a></h2>
+
+<p>You can log in with your Google account using Google's authentication. This site will never get your password. If you don't have a Google Account, you can create a <a href="http://mail.google.com/mail/signup">Gmail</a> account, or a <a href="https://www.google.com/accounts/NewAccount">Google Account</a> using your existing e-mail address.</p>
+{% endif %}
+
+<p>You can contact me via thl at lenardgabor dotcom.</p>
+
+{% endblock %}

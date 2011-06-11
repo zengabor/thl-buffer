@@ -1,0 +1,16 @@
+{% if tasks %}
+<ul class="tasks" id="tasks">
+{% for task in tasks %}
+    <li>
+	{% if task.is_archived %}
+		<a href="/tasks/{{ task.key().id() }}" onclick="delete_task(this); return false"><img src="/static/purge.png" alt="Purge!" title="Purge!" height="16" width="16" /></a>
+		<a href="/tasks/{{ task.key().id() }}" style="text-decoration: none"><img src="/static/edit.png" alt="Edit..." title="Edit..." height="16" width="16" />&times;</a>
+	{% else %}
+		<a href="/tasks/{{ task.key().id() }}/archive" onclick="archive_task(this); return false"><img src="/static/archive.png" alt="Archive!" title="Archive!" height="16" width="16" /></a>
+		<a href="/tasks/{{ task.key().id() }}" style="text-decoration: none"><img src="/static/edit.png" alt="Edit..." title="Edit..." height="16" width="16" />&#8227;</a>
+	{% endif %}
+	<a id="{{ task.key().id() }}" href="{{ task.get_thl_uri()|safe }}">{{ task.title|e }}</a>
+	</li>
+{% endfor %}
+</ul>
+{% endif %}

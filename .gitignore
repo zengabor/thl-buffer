@@ -1,0 +1,10 @@
+# General
+.DS_Store
+*.pyc
+.coverage
+.egg-info
+
+# Tipfy app
+lib/*
+locale/*
+.build/*

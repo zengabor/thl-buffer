@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<p>
+		Clicking an individual tasks will add it to THL.<br />
+		<span style="display: none"><input type="checkbox" name="autoarchive" value="1" checked/> Archive task on clicking link</span>
+	</p>
+
+	{% if tasks %}{% include "_task-list.html" %}{% endif %}
+
+	<p>
+		<button onclick="import_all()">&#8227;&#8227; Import All Into THL</button>
+		<button onclick="archive_all()">Archive All</button>
+	</p>
+	<p><em>("Import All" works currently in Safari for Mac only.)</em></p>
+
+	{% include "_task-form.html" %}
+
+{% endblock %}
