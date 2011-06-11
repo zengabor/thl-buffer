@@ -28,7 +28,7 @@ class BaseHandler(RequestHandler, Jinja2Mixin, GoogleMixin):
     return context
     
 class BaseTaskHandler(BaseHandler):
-  def handle_task(self, id):
+  def get_task(self, id):
     """Verifies the task and then calles handle_task()"""
     if not id:
       return self.notfound()
@@ -89,69 +89,40 @@ class TaskHandler(BaseTaskHandler):
     context = self.get_context()
     context['title'] = 'Task'
     context['tasks'] = Task.fetch_all_active()
-    try:
-      i = int(id)
-      task = Task.get_by_id(i)
-      if task:
-        if users.get_current_user() != task.user:
-          return self.unauthorized()
-        context['task'] = task
-      else:
-        return self.notfound()
-      return self.render_response('task-edit.html', **context)
-    except ValueError:
-      return self.notfound()
+    task = self.get_task(id)
+    if not isinstance(task, Task):
+      return task
+    context['task'] = task
+    return self.render_response('task-edit.html', **context)
 
   def post(self, id):
     """Updating"""
     if not id:
       return self.notfound()
-    try:
-      i = int(id)
-      task = Task.get_by_id(i)
-      if task:
-        if users.get_current_user() != task.user:
-          return self.unauthorized()
-        task.is_archived = False
-        task.save(self.request.form)
-        return self.redirect_to('tasks')
-      else:
-        return self.notfound()
-    except ValueError:
-      return self.notfound()
+    task = self.get_task(id)
+    if not isinstance(task, Task):
+      return task
+    task.is_archived = False
+    task.save(self.request.form)
+    return self.redirect_to('tasks')
       
   def delete(self, id):
-    logging.warn(">>> task '%s' should be deleted" % id)
-    try:
-      i = int(id)
-      task = Task.get_by_id(i)
-      if task:
-        if users.get_current_user() != task.user:
-          return self.unauthorized()
-        task.delete()
-        return Response("Deleted.")
-      else:
-        return self.notfound()
-    except ValueError:
-      return self.notfound()
+    task = self.get_task(id)
+    if not isinstance(task, Task):
+      return task
+    task.delete()
+    return Response("Deleted.")
     
 
-class TaskArchiveHandler(BaseHandler):
+class TaskArchiveHandler(BaseTaskHandler):
   def put(self, id):
     if not id:
       return self.notfound()
-    try:
-      i = int(id)
-      task = Task.get_by_id(i)
-      if task:
-        if users.get_current_user() != task.user:
-          return self.unauthorized()
-        task.archive()
-        return Response("Archived.")
-      else:
-        return self.notfound()
-    except ValueError:
-      return self.notfound()
+    task = self.get_task(id)
+    if not isinstance(task, Task):
+      return task
+    task.archive()
+    return Response("Archived.")
 
 
 class ArchiveHandler(BaseHandler):
