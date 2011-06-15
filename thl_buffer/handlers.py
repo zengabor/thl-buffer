@@ -31,28 +31,18 @@ class BaseTaskHandler(BaseHandler):
   def get_task(self, id):
     """Verifies the task and then calles handle_task()"""
     if not id:
-      return self.notfound()
+      self.abort(404)
     try:
       i = int(id)
       task = Task.get_by_id(i)
     except ValueError:
-      return self.notfound()
+      self.abort(404)
     if not task:
-      return self.notfound()
+      self.abort(404)
     if users.get_current_user() != task.user:
-      return self.unauthorized()
+      self.abort(401)
     return task
-    
-  def notfound(self):
-    response = Response('Page not found.')
-    response.status_code = 404
-    return response
 
-  def unauthorized(self):
-    response = Response('Access denied.')
-    response.status_code = 401
-    return response
-    
 
 class WelcomeHandler(BaseHandler):
   def get(self):
@@ -84,43 +74,28 @@ class TaskListHandler(BaseHandler):
 
 class TaskHandler(BaseTaskHandler):
   def get(self, id):
-    if not id:
-      return self.notfound()
     context = self.get_context()
     context['title'] = 'Task'
     context['tasks'] = Task.fetch_all_active()
-    task = self.get_task(id)
-    if not isinstance(task, Task):
-      return task
-    context['task'] = task
+    context['task'] = self.get_task(id)
     return self.render_response('task-edit.html', **context)
 
   def post(self, id):
     """Updating"""
-    if not id:
-      return self.notfound()
     task = self.get_task(id)
-    if not isinstance(task, Task):
-      return task
     task.is_archived = False
     task.save(self.request.form)
     return self.redirect_to('tasks')
       
   def delete(self, id):
     task = self.get_task(id)
-    if not isinstance(task, Task):
-      return task
     task.delete()
     return Response("Deleted.")
     
 
 class TaskArchiveHandler(BaseTaskHandler):
   def put(self, id):
-    if not id:
-      return self.notfound()
     task = self.get_task(id)
-    if not isinstance(task, Task):
-      return task
     task.archive()
     return Response("Archived.")
 
